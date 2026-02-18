@@ -11,24 +11,31 @@
 <h2 style="color:purple"><center>CURRENCY CONVERTER</center></h2>
 <table  style="background-color:black;color:black" width="500">
     
-<center><h2>Value to convert</h2>
+<center><h3>Value to convert</h3>
 <form action="" method="POST">
-<input type="text" name="amount" required placeholder="value to convert" autofocus><br><br>
+<input type="text" name="amount" required placeholder="value to convert" autofocus style="width:100px"><br><br>
 
-<label >FROM:
-  <select name="item">
+<label>FROM:
+  <select name="from_currency">
       <option value="">Select</option>
-    <option value="apple">Apple</option>
-    <option value="banana">Banana</option>
-  </select>
+      {% for c in currency_list %}
+    <option value="">{{ c }}</option>
+      {% endfor %}
+  </select> --
 </label>
 
-    <br><br>
+<label>TO:
+    <select name="to_currency">
+        <option>select</option>
+        {% for c in currency_list %}
+    <option value="">{{ c }}</option>
+      {% endfor %}
+    </select>
+</label>
+<br><br>
 <input type="submit" value="submit">
 </center>
     
-
-
 </table>
 </body>
 </html>
