@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Currency Converter</title>
 </head>
-<body>
+<body bgcolor="skyblue">
 <h2 style="color:purple"><center>CURRENCY CONVERTER</center></h2>
 <table  style="background-color:black;color:black" width="500">
     
@@ -16,26 +16,43 @@
 <input type="text" name="amount" required placeholder="value to convert" autofocus style="width:100px"><br><br>
 
 <label>FROM:
-  <select name="from_currency">
+  <select name="from_currency" required>
       <option value="">Select</option>
-      {% for c in currency_list %}
-    <option value="">{{ c }}</option>
+      {% for c in currency_key %}
+    <option value="{{ c }}">{{ c }}</option>
       {% endfor %}
   </select> --
 </label>
 
 <label>TO:
-    <select name="to_currency">
-        <option>select</option>
-        {% for c in currency_list %}
-    <option value="">{{ c }}</option>
+    <select name="to_currency" required>
+        <option value="">select</option>
+        {% for c in currency_key %}
+    <option value="{{ c }}">{{ c }}</option>
       {% endfor %}
     </select>
 </label>
 <br><br>
-<input type="submit" value="submit">
+<input type="submit" value="calculate"><br><br>
+
+<table align="center" border="0" width=300 height=100 style="background-color:beige">
+    <thead>
+    <tr>
+    <th>FROM</th>
+    <th>TO</th>
+    </tr>
+    </thead>
+
+    <tr><td><center>{{ from_currency1 }}: {{ from_rates}}</center></td>
+        <td><center>{{ to_currency1 }}: {{ to_rates }}</center></td>
+
+    </tr>
+    <tr><td align="right"><B>RESULT:</B></td><td align="left"> {{ total_amount }}   {{ to_currency1 }}</td>
+    </tr>
+
+</table>
+
 </center>
-    
 </table>
 </body>
 </html>
