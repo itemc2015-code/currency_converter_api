@@ -9,9 +9,11 @@ load_dotenv()
 @app.route('/',methods=['GET','POST'])
 def home():
     try:
-        url = os.getenv("api_url")
-        headers = os.getenv("api_header")
-        response = requests.get(url,headers=headers)
+        api_key = os.getenv("api_key")
+        if not  api_key:
+            return {"API key not found"}
+        url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
+        response = requests.get(url)
         rates = response.json()
         c_rates = rates['conversion_rates']
     except Exception as e:
@@ -20,9 +22,11 @@ def home():
     currency_key = [c for c in c_rates.keys()]
     currency_value = [v for v in c_rates.values()]
 
-    total_amount = None
-    from_rates = None
-    to_rates = None
+    total_amount = ""
+    from_rates = ""
+    to_rates = ""
+    from_currency1 = ""
+    to_currency1 = ""
 
     if request.method == 'POST':
         amount = request.form.get("amount")
