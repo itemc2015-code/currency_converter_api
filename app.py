@@ -5,17 +5,22 @@ app = Flask(__name__)
 
 @app.route('/',methods=['GET','POST'])
 def home():
-
-    url = "https://v6.exchangerate-api.com/v6/ffdd5bbcb02e1b65d7f798ac/latest/USD"
-    headers = {"api_key":"ffdd5bbcb02e1b65d7f798ac"}
-    response = requests.get(url,headers=headers)
-    rates = response.json()
-    c_rates = rates['conversion_rates']
+    try:
+        url = "https://v6.exchangerate-api.com/v6/ffdd5bbcb02e1b65d7f798ac/latest/USD"
+        headers = {"api_key":"ffdd5bbcb02e1b65d7f798ac"}
+        response = requests.get(url,headers=headers)
+        rates = response.json()
+        c_rates = rates['conversion_rates']
+    except Exception as e:
+        return f"API error {e}"
 
     currency_key = [c for c in c_rates.keys()]
     currency_value = [v for v in c_rates.values()]
 
     total_amount = None
+    from_rates = None
+    to_rates = None
+
     if request.method == 'POST':
         amount = request.form.get("amount")
         from_currency1 = request.form.get("from_currency")
@@ -30,4 +35,4 @@ def home():
                            from_rates=from_rates,to_rates=to_rates)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False,host=0.0.0.0,port=5000)
