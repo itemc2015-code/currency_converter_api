@@ -1,13 +1,16 @@
 from flask import Flask,render_template,request
 import requests
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+load_dotenv()
 
 @app.route('/',methods=['GET','POST'])
 def home():
     try:
-        url = "https://v6.exchangerate-api.com/v6/ffdd5bbcb02e1b65d7f798ac/latest/USD"
-        headers = {"api_key":"ffdd5bbcb02e1b65d7f798ac"}
+        url = os.getenv("api_url")
+        headers = os.getenv("api_header")
         response = requests.get(url,headers=headers)
         rates = response.json()
         c_rates = rates['conversion_rates']
@@ -35,4 +38,4 @@ def home():
                            from_rates=from_rates,to_rates=to_rates)
 
 if __name__ == '__main__':
-    app.run(debug=False,host=0.0.0.0,port=5000)
+    app.run(debug=False,host="0.0.0.0",port=5000)
