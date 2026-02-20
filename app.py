@@ -11,7 +11,7 @@ def home():
     try:
         api_key = os.getenv("api_key")
         if not  api_key:
-            return {"API key not found"}
+            return "API key not found"
         url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
         response = requests.get(url)
         rates = response.json()
